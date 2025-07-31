@@ -16,7 +16,7 @@ class TunnelClosedException(Exception):
 class honeypot_proxy_client:
 	def __init__(self):
 		self._active=True
-		self._url='ws://localhost:8080/socket.io/'
+		self._url='ws://guiselink.com:8080/socket.io/'
 
 		self._socketio=socketio.Client(logger=False, engineio_logger=False)
 		self._socketio.on('response', namespace='/', handler=self._response)
@@ -145,7 +145,7 @@ class honeypot_proxy_client:
 				tunnel_url=tunnel_url
 				)
 			)
-		sleep(0.05)
+		#sleep(0.5)
 
 
 

@@ -97,7 +97,7 @@ class exit_node:
 
 
 	def create_tunnel(self, message):
-		print(f'Creating tunnel with address {message['tunnel_url']} {message['tunnel_uuid']}')
+		print(f'Creating tunnel with address {message["tunnel_url"]} {message["tunnel_uuid"]}')
 		address = message['tunnel_url'].split(':', 1)
 		address[1] = int(address[1]) or 443
 		connection=socket.create_connection(address, timeout=5)
@@ -154,15 +154,16 @@ class exit_node:
 											content=encoded))
 				#sleep(0.01)
 			except Exception as e:
-				print('Exception during attempt to read data from socket', self._tunnels[tunnel]['tunnel_uuid'], e)
-				#print(e)
-				with self._lock:
-					if tunnel in self._tunnels:
-						self._socketio.emit("tunnel_close",
-							self.build_message_tunnel(
-								tunnel_uuid=tunnel,
-								status="Close"
-							))
+				if tunnel in self._tunnels:
+					print('Exception during attempt to read data from socket', self._tunnels[tunnel]['tunnel_uuid'], e)
+					print(e)
+					with self._lock:
+						if tunnel in self._tunnels:
+							self._socketio.emit("tunnel_close",
+								self.build_message_tunnel(
+									tunnel_uuid=tunnel,
+									status="Close"
+								))
 
 
 	def send_tunel(self, message):

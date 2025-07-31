@@ -1,6 +1,7 @@
 from honeypot_proxy_client import honeypot_proxy_client, TunnelClosedException
 from base64 import b64decode
 from select import select
+from time import sleep
 
 
 import http.server
@@ -41,7 +42,7 @@ class SimpleHTTPProxy(http.server.BaseHTTPRequestHandler):
     def do_CONNECT(self):
         address=self.path
         tunnel_uuid=proxy.create_relay(self.path)
-
+        sleep(0.1)
         self.connect_relay(tunnel_uuid)
 
         
